@@ -101,6 +101,8 @@ Examples of the different types of graphs that can be plotted are provided below
 
 ### Plotting a two variables line, area or bar graph
 
+![Example 1](example_graphs/example1.png)
+
 As a first example, consider the following DataFrame with two columns:
 
 | Index | Column 1 | Column 2 | value |
@@ -119,6 +121,7 @@ As a first example, consider the following DataFrame with two columns:
 | 12    | 2050     | Data3    | 13 |
 
 To plot this DataFrame, `functions.graph_2_variables` can be used:
+
 
 ~~~py
 import matplotlib.pyplot as plt
@@ -154,6 +157,8 @@ df = functions.graph_2_variables(kind, ax, df, x_var, y_var, years_to_compare, d
 The two variable graph function can also accept marker, linestyle, and linewidth dictionaries as arguments if needed. The syntax is the same as for the `color_dict`.
 
 ### Plotting a three variables line, area or bar graph
+
+![Example 2](example_graphs/example2.png)
 
 For the second example, consider the following DataFrame with three columns:
 
@@ -220,7 +225,11 @@ Here, with three variables to analyze, the names of the analyzed data are referr
 
 This example showcases an area graph, so it isn't possible to customize the marker, linestyle, or linewidth.
 
+
+
 ### Plotting a multiple scenario two variables line or bar graph
+
+![Example 3](example_graphs/example3.png)
 
 This example will utilize the same DataFrame as in the **Plotting a two variables line, area, or bar graph** example. Additionally, it will incorporate another DataFrame with slightly modified values to simulate a different scenario:.
 
@@ -261,6 +270,8 @@ df = functions.graph_mulitple_scenarios_2_variables(kind, ax, dataframes, x_var,
 Since comparing multiple DataFrames (considered as different scenarios), they need to be named with `scenario_names`. Additionally, the `color_dict` must consider the name of these scenarios. Here's an example for a bar graph (also works with barh). An area graph wouldn't be appropriate for comparing multiple scenarios.
 
 ### Plotting a multiple scenario three variables line or bar graph
+
+![Example 4](example_graphs/example4.png)
 
 This example will use the DataFrame from **Plotting a three variables line, area, or bar graph** and another one with modified values to simulate a comparison of multiple scenarios.
 
@@ -321,6 +332,8 @@ df = functions.graph_mulitple_scenarios_3_variables(kind, ax, dataframes, x_var,
 Here, the option to specify the legend location is also showcased.
 
 ### Plotting a stacked grouped graph
+
+![Example 5](example_graphs/example5.png)
 
 To plot a stacked grouped graph, multiple scenarios are needed to compare over multiple years for multiple data. The DataFrames for this example are the same as from **Plotting a three variables line, area, or bar graph** with slightly different values to simulate different scenarios.
 
