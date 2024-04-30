@@ -63,24 +63,32 @@ If not familiar with the data being worked with or unsure of how to spell specif
 functions.verification(gdx_files, name, x_var, y_var, years_to_compare, data_to_compare)
 ```
 
-The `functions.verification` checks if the specified `x_var`, `y_var`, `years_to_compare`, and `data_to_compare` exist in the DataFrame labeled `name` in the Container object(s) from the `gdx_files` list. It returns the filtered DataFrame if no error occurs (if all the specified elements exist in the DataFrame). Otherwise, it displays a customized message to help identify the mistake. The `functions.verification` can also check for additional variables called `z_var` and `z_var_to_compare`.
+The `functions.verification` checks if the specified `x_var`, `y_var`, `years_to_compare`, and `data_to_compare` exist in the DataFrame labeled `name` in the Container object(s) from the `gdx_files` list. It returns a list of the DataFrames if no error occurs (if all the specified elements exist in the DataFrame). Otherwise, it displays a customized message to help identify the mistake. The `functions.verification` can also check for additional variables called `z_var` and `z_var_to_compare`.
+
+To effectively use this function, I recomment using the following line of code, which will assign the list of DataFrames to `dataframes` if there's no error encountered.
+
+~~~py
+if dataframes := functions.verification(gdx_files, name, x_var, y_var, years_to_compare, data_to_compare):
+    fig, ax = plt.subplots()
+    df = functions. ...
+~~~
 
 ## Plotting a Graph
 
-To plot a graph, the DataFrame needs to be formatted in the following format:
+To plot a graph, ensure that the DataFrame is formatted as shown below:
 
-| Index | Column name 1 | Column name 2    | ... | Column name n | value or level|
-|-------|---------------|------------------|-----|---------------|----------------|
-| 1     | Row name 1.1  | Row name 2.1     | ... | Row name n.1  | Number         |
-| 2     | Row name 1.2  | Row name 1.1     | ... | Row name n.2  | Number         |
-| ...   | ....          | ...              | ... | ...           | ...            |
-| m     | Row name 1.m  | Row name 2.m     | ... | Row name n.m  | Number         |
+| Index    | Column name 1 | Column name 2    | ... | Column name n | value or level|
+|----------|---------------|------------------|-----|---------------|----------------|
+| 1        | Row name 1.1  | Row name 2.1     | ... | Row name n.1  | Number         |
+| 2        | Row name 1.2  | Row name 2.1     | ... | Row name n.1  | Number         |
+| ...      | ....          | ...              | ... | ...           | ...            |
+| a * b * c | Row name 1.a | Row name 2.b     | ... | Row name n.c  | Number         |
 
-Where the Column names need to be different as well as the Row names of the same column. The column containing the values to plot needs to be called either "value" or "level". If analyzing a GDX file, the format should already be appropriate.
+Ensure that the Column names are distinct, as well as the Row names within the same column. The column containing the values to plot should be named either "value" or "level". If analyzing a GDX file, the format should already be appropriate.
 
 ###  Required Variables
 
-Once a correctly formatted DataFrame is obtained, specify which columns and rows to plot.
+Once you have a correctly formatted DataFrame, specify the columns and rows to plot using the following variables:
 
    - `x_var`: Label of the data in the DataFrame for the x-axis. Typically, this represents different years for comparison.
    - `y_var`: Label of the data in the DataFrame for the y-axis of the graph.
@@ -91,27 +99,26 @@ Once a correctly formatted DataFrame is obtained, specify which columns and rows
 
 Examples of the different types of graphs that can be plotted are provided below.
 
-
 ### Plotting a two variables line, area or bar graph
 
-As a first example, here is a DataFrame with two columns:
+As a first example, consider the following DataFrame with two columns:
 
 | Index | Column 1 | Column 2 | value |
-|-------|----------|----------|--------|
-| 1     | 2020     | Data1    | 5|
-| 2     | 2030     | Data1    | 7|
-| 3     | 2040     | Data1    | 10|
-| 4     | 2050     | Data1    | 15|
-| 5     | 2020     | Data2    | 3|
-| 6     | 2030     | Data2    | 6|
-| 7     | 2040     | Data2    | 7|
-| 8     | 2050     | Data2    | 9|
-| 9     | 2020     | Data3    | 4|
-| 10    | 2030     | Data3    | 8|
-| 11    | 2040     | Data3    | 10|
-| 12    | 2050     | Data3    | 13|
+|-------|----------|----------|-------|
+| 1     | 2020     | Data1    | 5  |
+| 2     | 2030     | Data1    | 7  |
+| 3     | 2040     | Data1    | 10 |
+| 4     | 2050     | Data1    | 15 |
+| 5     | 2020     | Data2    | 3  |
+| 6     | 2030     | Data2    | 6  |
+| 7     | 2040     | Data2    | 7  |
+| 8     | 2050     | Data2    | 9  |
+| 9     | 2020     | Data3    | 4  |
+| 10    | 2030     | Data3    | 8  |
+| 11    | 2040     | Data3    | 10 |
+| 12    | 2050     | Data3    | 13 |
 
-To plot this DataFrame, let's use `functions.graph_2_variables`:
+To plot this DataFrame, `functions.graph_2_variables` can be used:
 
 ~~~py
 import matplotlib.pyplot as plt
@@ -122,8 +129,7 @@ import pandas as pd
 data = {
     'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
     'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
-    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13]
-}
+    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13]}
 df = pd.DataFrame(data)
 
 x_var = 'Column 1'
@@ -133,11 +139,11 @@ data_to_compare = ['Data1', 'Data2'] # Filter out Data3
 data_label_dict = {'Data1': 'Data one', 'Data2': 'Data two'}
 color_dict = {'Data1': 'red', 'Data2': 'blue'}
 
-marker_dict = {'Data1': '<', 'Data2': '^'} # Optional argument
-linestyle_dict = {'Data1': '--', 'Data1': ':'} # Optional argument
-linewidth_dict = {'Data1': 5, 'Data2': 1} # Optional argument
+marker_dict = {'Data1': '<', 'Data2': '^'}  # Optional argument
+linestyle_dict = {'Data1': '--', 'Data1': ':'}  # Optional argument
+linewidth_dict = {'Data1': 5, 'Data2': 1}  # Optional argument
 
-kind = 'line' # Either line, area or bar
+kind = 'line'  # Either line, area or bar
 
 fig, ax = plt.subplots()
 df = functions.graph_2_variables(kind, ax, df, x_var, y_var, years_to_compare, data_to_compare,
@@ -145,49 +151,47 @@ df = functions.graph_2_variables(kind, ax, df, x_var, y_var, years_to_compare, d
                                  linestyle=linestyle_dict, linewidth=linewidth_dict)
 ~~~
 
-The two variable graph can also take a marker dictionnary, a linestyle dictionnary and a linewidth dictionnary as an argument to specify if needed. The syntax is the same as for the `color_dict`.
+The two variable graph function can also accept marker, linestyle, and linewidth dictionaries as arguments if needed. The syntax is the same as for the `color_dict`.
 
 ### Plotting a three variables line, area or bar graph
 
-For the second example, here is a DataFrame with three columns:
+For the second example, consider the following DataFrame with three columns:
 
 | Index | Column 1 | Column 2 | Column 3  | value |
-|-------|----------|----------|-----------|--------|
-| 1     | 2020     | Data1    | Variable1 | 5|
-| 2     | 2030     | Data1    | Variable1 | 7|
-| 3     | 2040     | Data1    | Variable1 | 10|
-| 4     | 2050     | Data1    | Variable1 | 15|
-| 5     | 2020     | Data2    | Variable1 | 3|
-| 6     | 2030     | Data2    | Variable1 | 6|
-| 7     | 2040     | Data2    | Variable1 | 7|
-| 8     | 2050     | Data2    | Variable1 | 9|
-| 9     | 2020     | Data3    | Variable1 | 4|
-| 10    | 2030     | Data3    | Variable1 | 8|
-| 11    | 2040     | Data3    | Variable1 | 10|
-| 12    | 2050     | Data3    | Variable1 | 13|
-| 13    | 2020     | Data1    | Variable2 | 2|
-| 14    | 2030     | Data1    | Variable2 | 9|
-| 15    | 2040     | Data1    | Variable2 | 17|
-| 16    | 2050     | Data1    | Variable2 | 20|
-| 17    | 2020     | Data2    | Variable2 | 1|
-| 18    | 2030     | Data2    | Variable2 | 4|
-| 19    | 2040     | Data2    | Variable2 | 7|
-| 20    | 2050     | Data2    | Variable2 | 12|
-| 21    | 2020     | Data3    | Variable2 | 6|
-| 22    | 2030     | Data3    | Variable2 | 8|
-| 23    | 2040     | Data3    | Variable2 | 13|
-| 24    | 2050     | Data3    | Variable2 | 16|
+|-------|----------|----------|-----------|-------|
+| 1     | 2020     | Data1    | Variable1 | 5  |
+| 2     | 2030     | Data1    | Variable1 | 7  |
+| 3     | 2040     | Data1    | Variable1 | 10 |
+| 4     | 2050     | Data1    | Variable1 | 15 |
+| 5     | 2020     | Data2    | Variable1 | 3  |
+| 6     | 2030     | Data2    | Variable1 | 6  |
+| 7     | 2040     | Data2    | Variable1 | 7  |
+| 8     | 2050     | Data2    | Variable1 | 9  |
+| 9     | 2020     | Data3    | Variable1 | 4  |
+| 10    | 2030     | Data3    | Variable1 | 8  |
+| 11    | 2040     | Data3    | Variable1 | 10 |
+| 12    | 2050     | Data3    | Variable1 | 13 |
+| 13    | 2020     | Data1    | Variable2 | 2  |
+| 14    | 2030     | Data1    | Variable2 | 9  |
+| 15    | 2040     | Data1    | Variable2 | 17 |
+| 16    | 2050     | Data1    | Variable2 | 20 |
+| 17    | 2020     | Data2    | Variable2 | 1  |
+| 18    | 2030     | Data2    | Variable2 | 4  |
+| 19    | 2040     | Data2    | Variable2 | 7  |
+| 20    | 2050     | Data2    | Variable2 | 12 |
+| 21    | 2020     | Data3    | Variable2 | 6  |
+| 22    | 2030     | Data3    | Variable2 | 8  |
+| 23    | 2040     | Data3    | Variable2 | 13 |
+| 24    | 2050     | Data3    | Variable2 | 16 |
 
-Here, since there is 3 variables to analyze, the names of the analyzed data is refered as `y_var_to_compare` and `z_var_to_compare`. This example showcases an area graph.
+To plot this DataFrame, `functions.graph_3_variables` can be used:
 
 ~~~py
 data = {
     'Column 1': [2020, 2030, 2040, 2050] * 6,
     'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'] * 2,
     'Column 3': ['Variable1'] * 12 + ['Variable2'] * 12,
-    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13, 2, 9, 17, 20, 1, 4, 7, 12, 6, 8, 13, 16]
-}
-
+    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13, 2, 9, 17, 20, 1, 4, 7, 12, 6, 8, 13, 16]}
 df = pd.DataFrame(data)
 
 x_var = 'Column 1'
@@ -207,57 +211,171 @@ kind = 'area'
 
 fig, ax = plt.subplots()
 
-df = functions.graph_3_variables(kind, ax, df, x_var, y_var,
-                               z_var, years_to_compare,
-                               y_var_to_compare, z_var_to_compare,
-                               y_var_label_dict, color_dict,
-                               z_var_label_dict)
+df = functions.graph_3_variables(kind, ax, df, x_var, y_var, z_var,
+                                 years_to_compare, y_var_to_compare, z_var_to_compare,
+                                 y_var_label_dict, color_dict, z_var_label_dict)
 ~~~
 
-Here, the structure of the dictionnaries will be different from the previous examples. In the `color_dict`, we will need to have every possible combination of `y_var_to_compare` and `z_var_to_compare`.
+Here, with three variables to analyze, the names of the analyzed data are referred to as `y_var_to_compare` and `z_var_to_compare`. The structure of the dictionnaries will also be different from the previous examples. In the `color_dict`, we will need to have every possible combination of `y_var_to_compare` and `z_var_to_compare`.
+
+This example showcases an area graph, so it isn't possible to customize the marker, linestyle, or linewidth.
+
+### Plotting a multiple scenario two variables line or bar graph
+
+This example will utilize the same DataFrame as in the **Plotting a two variables line, area, or bar graph** example. Additionally, it will incorporate another DataFrame with slightly modified values to simulate a different scenario:.
+
+To plot these DataFrames, `functions.graph_mulitple_scenarios_2_variables` can be used:
+
+~~~py
+data1 = {
+    'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
+    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13]}
+df1 = pd.DataFrame(data1)
+
+data2 = {
+    'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
+    'value': [8, 10, 15, 20, 6, 9, 11, 14, 7, 10, 13, 17]}
+df2 = pd.DataFrame(data2)
+dataframes = [df1, df2]
+
+x_var = 'Column 1'
+y_var = 'Column 2'
+years_to_compare = [2020, 2030, 2050]  # Filter out 2040
+data_to_compare = ['Data1', 'Data2']  # Filter out Data3
+data_label_dict = {'Data1': 'Data one', 'Data2': 'Data two'}
+scenario_names = ['Scenario 1', 'Scenario 2']
+
+color_dict = {('Data1','Scenario 1'): 'red', ('Data2','Scenario 1'): 'blue',
+              ('Data1','Scenario 2'): 'orange', ('Data2','Scenario 2'): 'magenta'}
+
+kind = 'bar'  # Either line or bar
+
+fig, ax = plt.subplots()
+df = functions.graph_mulitple_scenarios_2_variables(kind, ax, dataframes, x_var, y_var,
+                                                    years_to_compare, data_to_compare,
+                                                    data_label_dict, color_dict, scenario_names)
+~~~
+
+Since comparing multiple DataFrames (considered as different scenarios), they need to be named with `scenario_names`. Additionally, the `color_dict` must consider the name of these scenarios. Here's an example for a bar graph (also works with barh). An area graph wouldn't be appropriate for comparing multiple scenarios.
+
+### Plotting a multiple scenario three variables line or bar graph
+
+This example will use the DataFrame from **Plotting a three variables line, area, or bar graph** and another one with modified values to simulate a comparison of multiple scenarios.
+
+To plot these DataFrames, `functions.graph_mulitple_scenarios_3_variables` can be used:
+
+~~~py
+data1 = {
+    'Column 1': [2020, 2030, 2040, 2050] * 6,
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'] * 2,
+    'Column 3': ['Variable1'] * 12 + ['Variable2'] * 12,
+    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13, 2, 9, 17, 20, 1, 4, 7, 12, 6, 8, 13, 16]}
+df1 = pd.DataFrame(data1)
+
+data2 = {
+    'Column 1': [2020, 2030, 2040, 2050] * 6,
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'] * 2,
+    'Column 3': ['Variable1'] * 12 + ['Variable2'] * 12,
+    'value': [1, 3, 7, 12, 2, 5, 6, 7, 2, 6, 9, 11, 2, 3, 15, 16, 1, 2, 6, 11, 1, 7, 10, 15]}
+df2 = pd.DataFrame(data2)
+
+dataframes = [df1, df2]
+
+x_var = 'Column 1'
+y_var = 'Column 2'
+z_var = 'Column 3'
+
+years_to_compare = [2020, 2030, 2050]  # Filter out 2040
+y_var_to_compare = ['Data1', 'Data2']  # Filter out Data3
+z_var_to_compare = ['Variable1','Variable2']
+
+y_var_label_dict =  {'Data1': 'Data one', 'Data2': 'Data two'}
+z_var_label_dict = {'Variable1':'Variable one', 'Variable2':'Variable two'}
+
+scenario_names = ['Scenario 1', 'Scenario 2']
+
+color_dict = {('Data1','Variable1','Scenario 1'): 'red', ('Data2','Variable1','Scenario 1'): 'blue',
+              ('Data1','Variable1','Scenario 2'): 'red', ('Data2','Variable1','Scenario 2'): 'blue',
+              ('Data1','Variable2','Scenario 1'): 'green', ('Data2','Variable2','Scenario 1'): 'cyan',
+              ('Data1','Variable2','Scenario 2'): 'green', ('Data2','Variable2','Scenario 2'): 'cyan'
+              }
+
+linestyle_dict = {('Data1','Variable1','Scenario 1'): '-', ('Data2','Variable1','Scenario 1'): '-',
+              ('Data1','Variable1','Scenario 2'): '--', ('Data2','Variable1','Scenario 2'): '--',
+              ('Data1','Variable2','Scenario 1'): '-', ('Data2','Variable2','Scenario 1'): '-',
+              ('Data1','Variable2','Scenario 2'): '--', ('Data2','Variable2','Scenario 2'): '--'
+              }
+
+kind = 'line'
+
+legend_position = (1,1)
+fig, ax = plt.subplots()
+df = functions.graph_mulitple_scenarios_3_variables(kind, ax, dataframes, x_var, y_var, z_var,
+                                                    years_to_compare, y_var_to_compare, z_var_to_compare
+                                                    y_var_label_dict, color_dict, z_var_label_dict,
+                                                    scenario_names, linestyle = linestyle_dict)
+~~~
+
+Here, the option to specify the legend location is also showcased.
 
 ### Plotting a stacked grouped graph
 
+To plot a stacked grouped graph, multiple scenarios are needed to compare over multiple years for multiple data. The DataFrames for this example are the same as from **Plotting a three variables line, area, or bar graph** with slightly different values to simulate different scenarios.
 
+~~~py
+data1 = {
+    'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
+    'value': [5, 7, 10, 15, 3, 6, 7, 9, 4, 8, 10, 13]}
+df1 = pd.DataFrame(data1)
 
+data2 = {
+    'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
+    'value': [8, 10, 15, 20, 6, 9, 11, 14, 7, 10, 13, 17]}
+df2 = pd.DataFrame(data2)
+data3 = {
+    'Column 1': [2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050, 2020, 2030, 2040, 2050],
+    'Column 2': ['Data1', 'Data1', 'Data1', 'Data1', 'Data2', 'Data2', 'Data2', 'Data2', 'Data3', 'Data3', 'Data3', 'Data3'],
+    'value': [10, 12, 17, 23, 8, 10, 13, 16, 9, 12, 15, 19]}
+df3 = pd.DataFrame(data3)
+dataframes = [df1, df2, df3]
 
-
-
-
-
-
-
-
-
-
-
-
-
-2. **Verification of the Container object (Optional)**
-
-If you are not familiar with the data you are working with or you are not sure how to spell the specific names, you may want to use the verification function. Once you identify the label of the data for analysis, this function will help to specify the desired data subset.
-
-
-name = 'example'
 x_var = 'Column 1'
 y_var = 'Column 2'
 
-years_to_compare = ['Year 1', 'Year 2', 'Year 3']
-data_to_compare = ['Data 1', 'Data 2', 'Data 3']
+years_to_compare = [2020, 2030, 2040, 2050]
+data_to_compare = ['Data1', 'Data2', 'Data3']
 
-functions.verification([gdx_file], name, x_var, y_var, years_to_compare, data_to_compare):
+data_label_dict =  {'Data1': 'Data one', 'Data2': 'Data two', 'Data3':'Data three'}
+color_dict = {'Data1': 'red', 'Data2': 'blue', 'Data3':'green'}
 
+scenario_names = ['Baseline', 'Scenario 1', 'Scenario 2']
+baseline_year = 2020  # Name and year of the baseline
+baseline_name = 'Baseline'
 
-3. **Adjust other customization**
+fig, ax = plt.subplots()
+df = functions.stacked_bar_graph(ax, dataframes, x_var, y_var,
+                                 years_to_compare, data_to_compare,
+                                 data_label_dict, color_dict,
+                                 scenario_names, baseline_year,
+                                 baseline_name)
+~~~
 
-   Since the `ax` object is created outside the functions, you can access this object to add specific titles to the axis, remove margins, add a grid, etc. Here are some examples:
+The `color_dict` for this function differs from the others, as you only need to specify the color for each data, which will be repeated in all the scenarios over the years. Additionally, you have to specify the `baseline_year` and the `baseline_name` so that there is only one bar for the year of reference.
 
-   ~~~py
-   ax.grid(axis='y')
-   ax.set_ylabel('')
-   ax.set_title('')
-   ax.margins(0)
-   ~~~
+### Adjust other customization
+
+Since the `ax` object is created outside the functions, it can be accessed to add specific titles to the axis, remove margins, add a grid, etc. Here are some examples:
+
+~~~py
+ax.grid(axis='y')
+ax.set_ylabel('')
+ax.set_title('')
+ax.margins(0)
+~~~
 
 
 
