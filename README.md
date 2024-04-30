@@ -1,4 +1,4 @@
-# Data Analysis and Graphic Output in Python (DAGO py)
+# Customizable Semi-Automatic Graphs in Python (CSAG py)
 
 This Python code generates detailed and customizable graphs based on data stored in a [Pandas DataFrame](https://pandas.pydata.org/docs/index.html). It's designed primarily for analyzing GAMS Data eXchange (GDX) files, but it can handle any labeled data that can be transcribed into a DataFrame.
 
