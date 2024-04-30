@@ -65,7 +65,7 @@ functions.verification(gdx_files, name, x_var, y_var, years_to_compare, data_to_
 
 The `functions.verification` checks if the specified `x_var`, `y_var`, `years_to_compare`, and `data_to_compare` exist in the DataFrame labeled `name` in the Container object(s) from the `gdx_files` list. It returns a list of the DataFrames if no error occurs (if all the specified elements exist in the DataFrame). Otherwise, it displays a customized message to help identify the mistake. The `functions.verification` can also check for additional variables called `z_var` and `z_var_to_compare`.
 
-To effectively use this function, I recomment using the following line of code, which will assign the list of DataFrames to `dataframes` if there's no error encountered.
+To effectively use this function, the following line of code would be appropriate as it will assign the list of DataFrames to `dataframes` if there's no error encountered.
 
 ~~~py
 if dataframes := functions.verification(gdx_files, name, x_var, y_var, years_to_compare, data_to_compare):
