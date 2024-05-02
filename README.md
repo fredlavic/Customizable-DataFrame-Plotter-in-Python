@@ -1,4 +1,4 @@
-# Customizable Semi-Automatic Graphs in Python (CSAG py)
+# Customizable Semi-Automatic Graphs in Python
 
 This Python code generates detailed and customizable graphs based on data stored in a [Pandas DataFrame](https://pandas.pydata.org/docs/index.html). It's designed primarily for analyzing GAMS Data eXchange (GDX) files, but it can handle any labeled data that can be transcribed into a DataFrame.
 
@@ -53,7 +53,7 @@ data_container = gt.Container(load_from=path_to_gdx_file, system_directory=ws.sy
 gdx_description, gdx_dict = functions.data_description(data_container)  # Gives a summary of the data available
 ```
 
-The GDX file is stored as a Container object, encapsulating all aliases, parameters, equations, variables, and sets under a label detailed in the `gdx_dict` dictionary (acronym and meaning, if provided in the GAMS code). Additionally, a summary of all this data is available in `gdx_description`, providing name, type, domain, domain type, dimension, number of records, sparsity, and various characteristics of the levels and values.
+The GDX file is stored as a Container object, encapsulating all aliases, parameters, equations, variables, and sets under labels detailed in the `gdx_dict` dictionary (acronym and meaning, if provided in the GAMS code). Additionally, a summary of all this data is available in `gdx_description`, providing name, type, domain, domain type, dimension, number of records, sparsity, and various characteristics of the levels and values.
 
 2. **Verification of the Container object (Optional)**
 
@@ -221,7 +221,7 @@ df = functions.graph_3_variables(kind, ax, df, x_var, y_var, z_var,
                                  y_var_label_dict, color_dict, z_var_label_dict)
 ~~~
 
-Here, with three variables to analyze, the names of the analyzed data are referred to as `y_var_to_compare` and `z_var_to_compare`. The structure of the dictionnaries will also be different from the previous examples. In the `color_dict`, we will need to have every possible combination of `y_var_to_compare` and `z_var_to_compare`.
+Here, with three variables to analyze, the names of the analyzed data are referred to as `y_var_to_compare` and `z_var_to_compare`. The structure of the dictionnaries will also be different from the previous examples. In the `color_dict`, we will need to have every possible combination of `y_var_to_compare` and `z_var_to_compare` in a tuple format.
 
 This example showcases an area graph, so it isn't possible to customize the marker, linestyle, or linewidth.
 
@@ -231,7 +231,7 @@ This example showcases an area graph, so it isn't possible to customize the mark
 
 ![Example 3](example_graphs/example3.png)
 
-This example will utilize the same DataFrame as in the **Plotting a two variables line, area, or bar graph** example. Additionally, it will incorporate another DataFrame with slightly modified values to simulate a different scenario:.
+This example will utilize the same DataFrame as in the **Plotting a two variables line, area, or bar graph** example. Additionally, it will incorporate another DataFrame with slightly modified values to simulate a different scenario.
 
 To plot these DataFrames, `functions.graph_mulitple_scenarios_2_variables` can be used:
 
@@ -336,6 +336,8 @@ Here, the option to specify the legend location is also showcased.
 ![Example 5](example_graphs/example5.png)
 
 To plot a stacked grouped graph, multiple scenarios are needed to compare over multiple years for multiple data. The DataFrames for this example are the same as from **Plotting a three variables line, area, or bar graph** with slightly different values to simulate different scenarios.
+
+To plot these DataFrames, `functions.stacked_bar_graph` can be used:
 
 ~~~py
 data1 = {
