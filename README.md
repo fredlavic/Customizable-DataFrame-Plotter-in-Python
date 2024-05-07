@@ -1,6 +1,6 @@
 # Customizable DataFrame Plotter in Python
 
-This Python code generates detailed and customizable graphs based on data stored in a [Pandas DataFrame](https://pandas.pydata.org/docs/index.html). It's designed primarily for analyzing GAMS Data eXchange (GDX) files, but it can handle any labeled data that can be transcribed into a DataFrame.
+This Python code generates detailed and customizable graphs based on data stored in a [Pandas DataFrame](https://pandas.pydata.org/docs/index.html). It's designed primarily for analyzing GAMS Data eXchange (GDX) files, but it can handle any labelled data that can be transcribed into a DataFrame.
 
 If not utilizing GDX files, the sections **Installation of GAMS API** and **Usage with GDX files** can be skipped to proceed directly to **Plotting a Graph**.
 
