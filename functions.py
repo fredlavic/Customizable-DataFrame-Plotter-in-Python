@@ -168,7 +168,7 @@ def graph_2_variables(kind, ax, dataframe, x_var, y_var,
                       years_to_compare, data_to_compare,
                       data_label_dict, color_dict, linestyle=False,
                       marker_dict=False, linewidth = False,
-                      legend_position=False):
+                      legend_position=False, return_legend=False):
     """
 
 
@@ -208,6 +208,9 @@ def graph_2_variables(kind, ax, dataframe, x_var, y_var,
         THE CONTAINER OBJECT FOR A LINE GRAPH.
     legend_position : tuple, optional
         USE IF YOU WANT TO SPECIFY THE LEGEND POSITION. THE FORMAT IS (X,Y).
+    return_legend : bool, optional
+        USE IF YOU WANT THE LEGEND TO BE RETURNED IN THE RIGHT ORDER TO PLOT
+        (USEFULL TO PLOT OTHER DATA ON THE SAME GRAPH).
 
     Returns
     -------
@@ -271,12 +274,15 @@ def graph_2_variables(kind, ax, dataframe, x_var, y_var,
     else: # If not a line graph
         df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
 
-    handles, labels = ax.get_legend_handles_labels()
-    if legend_position:  # Specify legend position
-        ax.legend(reversed(handles), reversed(legend),
-                  bbox_to_anchor=legend_position)
+    if return_legend:
+        return df_to_plot, legend
     else:
-        ax.legend(reversed(handles), reversed(legend))
+        handles, labels = ax.get_legend_handles_labels()
+        if legend_position:  # Specify legend position
+            ax.legend(reversed(handles), reversed(legend),
+                      bbox_to_anchor=legend_position)
+        else:
+            ax.legend(reversed(handles), reversed(legend))
 
     return df_to_plot
 
@@ -285,7 +291,8 @@ def graph_3_variables(kind, ax, dataframe, x_var, y_var, z_var,
                       years_to_compare, y_var_to_compare, z_var_to_compare,
                       y_var_label_dict, color_dict, z_var_label_dict,
                       linestyle=False, marker_dict=False,
-                      linewidth = False, legend_position=False):
+                      linewidth = False, legend_position=False,
+                      return_legend=False):
     """
 
 
@@ -332,6 +339,9 @@ def graph_3_variables(kind, ax, dataframe, x_var, y_var, z_var,
         THE CONTAINER OBJECT FOR A LINE GRAPH.
     legend_position : tuple, optional
         USE IF YOU WANT TO SPECIFY THE LEGEND POSITION. THE FORMAT IS (X,Y).
+    return_legend : bool, optional
+        USE IF YOU WANT THE LEGEND TO BE RETURNED IN THE RIGHT ORDER TO PLOT
+        (USEFULL TO PLOT OTHER DATA ON THE SAME GRAPH).
 
     Returns
     -------
@@ -404,12 +414,15 @@ def graph_3_variables(kind, ax, dataframe, x_var, y_var, z_var,
     else: # If not a line graph
         df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
 
-    handles, labels = ax.get_legend_handles_labels()
-    if legend_position:  # Specify legend position
-        ax.legend(reversed(handles), reversed(legend),
-                  bbox_to_anchor=legend_position)
+    if return_legend:
+        return df_to_plot, legend
     else:
-        ax.legend(reversed(handles), reversed(legend))
+        handles, labels = ax.get_legend_handles_labels()
+        if legend_position:  # Specify legend position
+            ax.legend(reversed(handles), reversed(legend),
+                      bbox_to_anchor=legend_position)
+        else:
+            ax.legend(reversed(handles), reversed(legend))
 
     return df_to_plot
 
@@ -420,7 +433,8 @@ def graph_mulitple_scenarios_2_variables(kind, ax, dataframes, x_var, y_var,
                                          scenario_names, linestyle=False,
                                          marker_dict=False,
                                          linewidth = False,
-                                         legend_position=False):
+                                         legend_position=False,
+                                         return_legend=False):
     """
 
 
@@ -464,6 +478,9 @@ def graph_mulitple_scenarios_2_variables(kind, ax, dataframes, x_var, y_var,
         THE CONTAINER OBJECT FOR A LINE GRAPH.
     legend_position : tuple, optional
         USE IF YOU WANT TO SPECIFY THE LEGEND POSITION. THE FORMAT IS (X,Y).
+    return_legend : bool, optional
+        USE IF YOU WANT THE LEGEND TO BE RETURNED IN THE RIGHT ORDER TO PLOT
+        (USEFULL TO PLOT OTHER DATA ON THE SAME GRAPH).
 
     Returns
     -------
@@ -536,13 +553,15 @@ def graph_mulitple_scenarios_2_variables(kind, ax, dataframes, x_var, y_var,
             df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
     else: # If not a line graph
         df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
-
-    handles, labels = ax.get_legend_handles_labels()
-    if legend_position:  # Specify legend position
-        ax.legend(reversed(handles), reversed(legend),
-                  bbox_to_anchor=legend_position)
+    if return_legend:
+        return df_to_plot, legend
     else:
-        ax.legend(reversed(handles), reversed(legend))
+        handles, labels = ax.get_legend_handles_labels()
+        if legend_position:  # Specify legend position
+            ax.legend(reversed(handles), reversed(legend),
+                      bbox_to_anchor=legend_position)
+        else:
+            ax.legend(reversed(handles), reversed(legend))
 
     return df_to_plot
 
@@ -554,7 +573,8 @@ def graph_mulitple_scenarios_3_variables(kind, ax, dataframes, x_var, y_var,
                                          z_var_label_dict, scenario_names,
                                          linestyle=False, marker_dict=False,
                                          linewidth = False,
-                                         legend_position=False):
+                                         legend_position=False,
+                                         return_legend=False):
     """
 
 
@@ -605,6 +625,9 @@ def graph_mulitple_scenarios_3_variables(kind, ax, dataframes, x_var, y_var,
         THE CONTAINER OBJECT FOR A LINE GRAPH.
     legend_position : tuple, optional
         USE IF YOU WANT TO SPECIFY THE LEGEND POSITION. THE FORMAT IS (X,Y).
+    return_legend : bool, optional
+        USE IF YOU WANT THE LEGEND TO BE RETURNED IN THE RIGHT ORDER TO PLOT
+        (USEFULL TO PLOT OTHER DATA ON THE SAME GRAPH).
 
     Returns
     -------
@@ -682,13 +705,15 @@ def graph_mulitple_scenarios_3_variables(kind, ax, dataframes, x_var, y_var,
             df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
     else: # If not a line graph
         df_to_plot.plot(kind=kind, ax=ax, color=color_dict, legend=False)
-
-    handles, labels = ax.get_legend_handles_labels()
-    if legend_position:  # Specify legend position
-        ax.legend(reversed(handles), reversed(legend),
-                  bbox_to_anchor=legend_position)
+    if return_legend:
+        return df_to_plot, legend
     else:
-        ax.legend(reversed(handles), reversed(legend))
+        handles, labels = ax.get_legend_handles_labels()
+        if legend_position:  # Specify legend position
+            ax.legend(reversed(handles), reversed(legend),
+                      bbox_to_anchor=legend_position)
+        else:
+            ax.legend(reversed(handles), reversed(legend))
 
     return df_to_plot
 
